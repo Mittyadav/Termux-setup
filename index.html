@@ -9,7 +9,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom right, #2b5876, #4e4376), 
+            background: linear-gradient(to bottom right, #1c1c1c, #4a4a4a), 
                         url('image2.jpg') no-repeat center center fixed;
             background-size: cover;
             color: white;
@@ -27,7 +27,7 @@
             font-size: 42px;
             margin: 0;
             color: #ffcc00;
-            text-shadow: 0px 0px 10px rgba(255, 204, 0, 0.8);
+            text-shadow: 0px 0px 15px rgba(255, 204, 0, 0.8);
         }
         header p {
             font-size: 18px;
@@ -76,14 +76,32 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
         button:hover {
             background-color: #0056b3;
-            transform: scale(1.1);
         }
-        button:active {
-            background-color: #003f7f;
+        button:active::after {
+            animation: ripple 0.6s linear;
+        }
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            z-index: -1;
+            transition: width 0.6s, height 0.6s;
+        }
+        button:active::after {
+            width: 200px;
+            height: 200px;
         }
         footer {
             margin-top: 20px;
@@ -104,17 +122,6 @@
             text-decoration: underline;
             color: white;
         }
-        .highlight {
-            animation: glowEffect 0.6s ease-in-out;
-        }
-        @keyframes glowEffect {
-            0% {
-                box-shadow: 0 0 5px yellow;
-            }
-            100% {
-                box-shadow: 0 0 15px rgba(0, 0, 0, 0);
-            }
-        }
     </style>
 </head>
 <body>
@@ -124,6 +131,7 @@
         <p>Contact Owner: <a href="https://t.me/iamak_roy" target="_blank">@iamak_roy</a> | <a href="https://t.me/OFFICIAL_PRO_PROMOTER" target="_blank">@OFFICIAL_PRO_PROMOTER</a></p>
     </header>
     
+    <!-- Commands -->
     <div class="command">
         <pre>pkg update && upgrade</pre>
         <button onclick="copyToClipboard(this, 'pkg update && upgrade')">Copy</button>
@@ -145,8 +153,8 @@
         <button onclick="copyToClipboard(this, 'pkg install -y rust binutils')">Copy</button>
     </div>
     <div class="command">
-        <pre>CARGO_BUILD_TARGET="$(rustc -Vv | grep "host" | awk '{print $2}')" pip install maturin</pre>
-        <button onclick="copyToClipboard(this, 'CARGO_BUILD_TARGET="$(rustc -Vv | grep "host" | awk \'{print $2}\')" pip install maturin')">Copy</button>
+        <pre>CARGO_BUILD_TARGET="$(rustc -Vv | grep 'host' | awk '{print $2}')" pip install maturin</pre>
+        <button onclick="copyToClipboard(this, 'CARGO_BUILD_TARGET="$(rustc -Vv | grep host | awk \'{print $2}\')" pip install maturin')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install requests</pre>
@@ -186,9 +194,9 @@
             navigator.clipboard.writeText(text).then(() => {
                 button.classList.add('highlight');
                 setTimeout(() => button.classList.remove('highlight'), 600);
-                alert('Command copied to clipboard: ' + text);
+                alert('Command copied to clipboard!');
             }).catch(err => {
-                alert('Failed to copy: ' + err);
+                alert('Failed to copy the command: ' + err);
             });
         }
     </script>
