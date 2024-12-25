@@ -78,7 +78,6 @@
             font-weight: bold;
             position: relative;
             overflow: hidden;
-            z-index: 1;
         }
         button:hover {
             background-color: #0056b3;
@@ -96,31 +95,29 @@
             height: 10px;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
-            z-index: -1;
             transition: width 0.6s, height 0.6s;
         }
         button:active::after {
             width: 200px;
             height: 200px;
         }
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 16px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-            max-width: 800px;
-            margin: 20px auto;
-        }
-        footer a {
-            color: #ffcc00;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
             color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -134,67 +131,66 @@
     <!-- Commands -->
     <div class="command">
         <pre>pkg update && upgrade</pre>
-        <button onclick="copyToClipboard(this, 'pkg update && upgrade')">Copy</button>
+        <button onclick="copyToClipboard('pkg update && upgrade')">Copy</button>
     </div>
     <div class="command">
         <pre>pkg install tur-repo</pre>
-        <button onclick="copyToClipboard(this, 'pkg install tur-repo')">Copy</button>
+        <button onclick="copyToClipboard('pkg install tur-repo')">Copy</button>
     </div>
     <div class="command">
         <pre>pkg install python-is-python3.10</pre>
-        <button onclick="copyToClipboard(this, 'pkg install python-is-python3.10')">Copy</button>
+        <button onclick="copyToClipboard('pkg install python-is-python3.10')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install --upgrade pip</pre>
-        <button onclick="copyToClipboard(this, 'pip install --upgrade pip')">Copy</button>
+        <button onclick="copyToClipboard('pip install --upgrade pip')">Copy</button>
     </div>
     <div class="command">
         <pre>pkg install -y rust binutils</pre>
-        <button onclick="copyToClipboard(this, 'pkg install -y rust binutils')">Copy</button>
+        <button onclick="copyToClipboard('pkg install -y rust binutils')">Copy</button>
     </div>
     <div class="command">
         <pre>CARGO_BUILD_TARGET="$(rustc -Vv | grep 'host' | awk '{print $2}')" pip install maturin</pre>
-        <button onclick="copyToClipboard(this, 'CARGO_BUILD_TARGET="$(rustc -Vv | grep host | awk \'{print $2}\')" pip install maturin')">Copy</button>
+        <button onclick="copyToClipboard('CARGO_BUILD_TARGET=\"$(rustc -Vv | grep host | awk \'{print $2}\')\" pip install maturin')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install requests</pre>
-        <button onclick="copyToClipboard(this, 'pip install requests')">Copy</button>
+        <button onclick="copyToClipboard('pip install requests')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install asyncio</pre>
-        <button onclick="copyToClipboard(this, 'pip install asyncio')">Copy</button>
+        <button onclick="copyToClipboard('pip install asyncio')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install aiohttp</pre>
-        <button onclick="copyToClipboard(this, 'pip install aiohttp')">Copy</button>
+        <button onclick="copyToClipboard('pip install aiohttp')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install loguru</pre>
-        <button onclick="copyToClipboard(this, 'pip install loguru')">Copy</button>
+        <button onclick="copyToClipboard('pip install loguru')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install cloudscraper</pre>
-        <button onclick="copyToClipboard(this, 'pip install cloudscraper')">Copy</button>
+        <button onclick="copyToClipboard('pip install cloudscraper')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install curl_cffi</pre>
-        <button onclick="copyToClipboard(this, 'pip install curl_cffi')">Copy</button>
+        <button onclick="copyToClipboard('pip install curl_cffi')">Copy</button>
     </div>
     <div class="command">
         <pre>pip install fake_useragent==1.5.1</pre>
-        <button onclick="copyToClipboard(this, 'pip install fake_useragent==1.5.1')">Copy</button>
+        <button onclick="copyToClipboard('pip install fake_useragent==1.5.1')">Copy</button>
     </div>
 
-    <footer>
-        <p>&copy; 2024 SCRIPT HUB | Hosted by <a href="https://t.me/scripthub00" target="_blank">Telegram Group</a></p>
-    </footer>
+    <!-- Notification -->
+    <div id="notification" class="notification">Command copied to clipboard!</div>
 
     <script>
-        function copyToClipboard(button, text) {
+        function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                button.classList.add('highlight');
-                setTimeout(() => button.classList.remove('highlight'), 600);
-                alert('Command copied to clipboard!');
+                const notification = document.getElementById('notification');
+                notification.classList.add('show');
+                setTimeout(() => notification.classList.remove('show'), 3000);
             }).catch(err => {
                 alert('Failed to copy the command: ' + err);
             });
