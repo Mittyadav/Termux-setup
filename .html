@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termux Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .command {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        pre {
+            margin: 0;
+            font-family: monospace;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Termux Setup Commands</h1>
+    
+    <div class="command">
+        <pre>pkg update && upgrade</pre>
+        <button onclick="copyToClipboard('pkg update && upgrade')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pkg install tur-repo</pre>
+        <button onclick="copyToClipboard('pkg install tur-repo')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pkg install python-is-python3.10</pre>
+        <button onclick="copyToClipboard('pkg install python-is-python3.10')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pip install --upgrade pip</pre>
+        <button onclick="copyToClipboard('pip install --upgrade pip')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pkg install -y rust binutils</pre>
+        <button onclick="copyToClipboard('pkg install -y rust binutils')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>CARGO_BUILD_TARGET="$(rustc -Vv | grep "host" | awk '{print $2}')" pip install maturin</pre>
+        <button onclick="copyToClipboard('CARGO_BUILD_TARGET="$(rustc -Vv | grep "host" | awk \'{print $2}\')" pip install maturin')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pip install requests</pre>
+        <button onclick="copyToClipboard('pip install requests')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pip install asyncio</pre>
+        <button onclick="copyToClipboard('pip install asyncio')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pip install aiohttp</pre>
+        <button onclick="copyToClipboard('pip install aiohttp')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pip install loguru</pre>
+        <button onclick="copyToClipboard('pip install loguru')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pip install cloudscraper</pre>
+        <button onclick="copyToClipboard('pip install cloudscraper')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pip install curl_cffi</pre>
+        <button onclick="copyToClipboard('pip install curl_cffi')">Copy</button>
+    </div>
+    <div class="command">
+        <pre>pip install fake_useragent==1.5.1</pre>
+        <button onclick="copyToClipboard('pip install fake_useragent==1.5.1')">Copy</button>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Command copied to clipboard: ' + text);
+            }).catch(err => {
+                alert('Failed to copy: ' + err);
+            });
+        }
+    </script>
+</body>
+  </html>
